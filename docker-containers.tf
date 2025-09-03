@@ -28,7 +28,7 @@ resource "docker_container" "redis" {
 
 resource "docker_container" "postgres" {
   name = "postgres"
-  image = "postgres:alpine3.22"
+  image = "postgres:13.22-alpine3.22"
 
   ports {
     internal = 5432
@@ -42,7 +42,7 @@ resource "docker_container" "postgres" {
 
 resource "docker_container" "grafana" {
   name = "grafana"
-  image = "grafana/grafana:latest"
+  image = "grafana/grafana:nightly-ubuntu"
 
   ports {
     internal = 3000
