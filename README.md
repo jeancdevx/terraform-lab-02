@@ -1,5 +1,7 @@
 # Ambiente de Desarrollo (DEV) - Terraform Lab
 
+efectivamente prof, me gano con este ejercicio y la maquina funcionando no ayudaba y tampoco lo complete a tiempo, pero no queria quedarme con la espinita de no resolverlo como se debia 🤗
+
 ## Descripción
 
 Este proyecto utiliza Terraform para desplegar un ambiente de desarrollo containerizado usando Docker, con múltiples servicios organizados en diferentes redes.
