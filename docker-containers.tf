@@ -1,55 +1,45 @@
-resource "docker_container" "app_net" {
+resource "docker_container" "nginx" {
   name  = "nginx-${terraform.workspace}"
   image = "nginx:stable-alpine3.21-perl"
-
-  ports {
-    internal = 80
-    external = var.nginx_external_port[terraform.workspace]
-  }
   
   networks_advanced {
-    name = "app_net"
+    name = docker_network.app_net.name
   }
 }
 
 resource "docker_container" "redis" {
-  name = "redis"
+  name = "redis-${terraform.workspace}"
   image = "redis:alpine3.22"
 
-  ports {
-    internal = 6379
-    external = var.redis_external_port[terraform.workspace]
-  }
-
   networks_advanced {
-    name = "persistence_net"
+    name = docker_network.persistence_net.name
   }
 }
 
 resource "docker_container" "postgres" {
-  name = "postgres"
+  name = "postgres-${terraform.workspace}"
   image = "postgres:13.22-alpine3.22"
 
-  ports {
-    internal = 5432
-    external = var.postgres_external_port[terraform.workspace]
-  }
+  env = [
+    "POSTGRES_PASSWORD=joaquinrenacuajo",
+    "POSTGRES_USER=dev",
+    "POSTGRES_DB=test"
+  ]
 
   networks_advanced {
-    name = "persistence_net"
+    name = docker_network.persistence_net.name
   }
 }
 
 resource "docker_container" "grafana" {
-  name = "grafana"
+  name = "grafana-${terraform.workspace}"
   image = "grafana/grafana:nightly-ubuntu"
 
-  ports {
-    internal = 3000
-    external = var.grafana_external_port[terraform.workspace]
-  }
+  env = [
+    "GF_SECURITY_ADMIN_PASSWORD=pepetiene123"
+  ]
 
   networks_advanced {
-    name = "monitor_net"
+    name = docker_network.monitor_net.name
   }
 }
